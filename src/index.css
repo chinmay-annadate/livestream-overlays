@@ -35,10 +35,11 @@ h1 {
 }
 
 .create-button-container {
-  padding-top: 10px;
+  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
 input, button {
