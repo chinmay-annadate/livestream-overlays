@@ -14,6 +14,7 @@ export default function UpdateFormDialog({ update }) {
   const [newText, setNewText] = useState("");
   const [top, setTop] = useState("");
   const [left, setLeft] = useState("");
+  const [size, setSize] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,7 +26,7 @@ export default function UpdateFormDialog({ update }) {
 
   const handleCloseAndUpdate = () => {
     setOpen(false);
-    update(text, newText, top, left);
+    update(text, newText, top, left, size);
   };
 
   return (
@@ -76,6 +77,15 @@ export default function UpdateFormDialog({ update }) {
             fullWidth
             variant="standard"
             onChange={(e) => setLeft(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            label="Size"
+            type="number"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setSize(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

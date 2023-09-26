@@ -13,6 +13,7 @@ export default function AddFormDialog({ add }) {
   const [text, setText] = useState("");
   const [top, setTop] = useState("");
   const [left, setLeft] = useState("");
+  const [size, setSize] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +25,7 @@ export default function AddFormDialog({ add }) {
 
   const handleCloseAndAdd = () => {
     setOpen(false);
-    add(text, top, left);
+    add(text, top, left, size);
   };
 
   return (
@@ -65,6 +66,15 @@ export default function AddFormDialog({ add }) {
             fullWidth
             variant="standard"
             onChange={(e) => setLeft(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            label="Size"
+            type="number"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setSize(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

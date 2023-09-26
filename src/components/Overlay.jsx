@@ -1,9 +1,9 @@
-function Overlay({ text, left, top }) {
+function Overlay({ text, left, top, size }) {
   const overlayStyle = {
     position: 'absolute',
     top: `${top}px`,
     left: `${left}px`,
-    fontSize: '24px',
+    fontSize: `${size}px`,
     color: 'white',
   };
 
