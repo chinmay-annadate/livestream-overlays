@@ -37,7 +37,7 @@ export default function AddFormDialog({ add }) {
         <DialogTitle>Add overlay</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter text, top and left distances
+            Enter text, top and left distances and size
           </DialogContentText>
           <TextField
             autoFocus
