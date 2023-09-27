@@ -29,7 +29,6 @@ function App() {
     };
     setOverlays([...overlays, newOverlay]);
     postToServer("/add", newOverlay);
-    console.log(overlays);
   }
 
   function deleteOverlay(text) {
