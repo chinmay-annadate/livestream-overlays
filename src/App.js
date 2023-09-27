@@ -20,12 +20,12 @@ function App() {
       });
   }, []);
 
-  function addOverlay(text, top = 0, left = 0, size = 24) {
+  function addOverlay(text, top, left, size) {
     const newOverlay = {
       text: text,
       top: 100 + Number(top),
       left: 380 + Number(left),
-      size: size,
+      size: Number(size) === 0 ? 24 : Number(size),
     };
     setOverlays([...overlays, newOverlay]);
     postToServer("/add", newOverlay);
@@ -42,26 +42,47 @@ function App() {
   }
 
   function updateOverlay(text, newText, top, left, size) {
+    var set = {};
+    if (newText !== "") {
+      set.text = newText;
+    }
+    if (top !== "") {
+      set.top = 100 + Number(top);
+    }
+    if (left !== "") {
+      set.left = 380 + Number(left);
+    }
+    if (size !== "") {
+      set.size = Number(size);
+    }
+
     setOverlays(
       overlays.map((overlay) => {
         if (overlay.text === text) {
           return {
-            text: newText,
-            top: top !== null ? top : overlay.top,
-            left: left != null ? left : overlay.left,
-            size: size != null ? size : overlay.size,
+            ...overlay,
+            ...set,
           };
         }
         return overlay;
       })
     );
-    postToServer("/update", {
-      text: text,
-      newText: newText,
-      top: top,
-      left: left,
-      size: size,
-    });
+    const key = { key: text };
+    putInServer("/update", { ...set, ...key });
+  }
+
+  function putInServer(route, obj) {
+    server
+      .put(route, obj, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   function postToServer(route, obj) {
