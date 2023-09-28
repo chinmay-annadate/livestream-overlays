@@ -4,6 +4,7 @@ import Stream from "./components/Stream";
 import server from "./axios-server";
 import { useState, useEffect } from "react";
 import Overlay from "./components/Overlay";
+import ImageOverlay from "./components/ImageOverlay";
 import AddFormDialog from "./components/form_dialogs/AddFormDialog";
 import DeleteFormDialog from "./components/form_dialogs/DeleteFormDialog";
 import UpdateFormDialog from "./components/form_dialogs/UpdateFormDialog";
@@ -20,12 +21,14 @@ function App() {
       });
   }, []);
 
-  function addOverlay(text, top, left, size) {
+  function addOverlay(text, top, left, size, image, imageUrl) {
     const newOverlay = {
       text: text,
       top: 100 + Number(top),
       left: 380 + Number(left),
-      size: Number(size) === 0 ? 24 : Number(size),
+      size: Number(size) === 0 ? (image?50:24) : Number(size),
+      image: String(image),
+      imageUrl: imageUrl,
     };
     setOverlays([...overlays, newOverlay]);
     postToServer("/add", newOverlay);
@@ -40,7 +43,7 @@ function App() {
     postToServer("/delete", { text: text });
   }
 
-  function updateOverlay(text, newText, top, left, size) {
+  function updateOverlay(text, newText, top, left, size, imageUrl) {
     var set = {};
     if (newText !== "") {
       set.text = newText;
@@ -54,6 +57,10 @@ function App() {
     if (size !== "") {
       set.size = Number(size);
     }
+    if (imageUrl !== "") {
+      set.imageUrl = imageUrl;
+    }
+
 
     setOverlays(
       overlays.map((overlay) => {
@@ -103,15 +110,26 @@ function App() {
       <Header title="Live stream" />
 
       <Stream src={rtspUrl} />
-      {overlays.map((overlay, index) => (
-        <Overlay
-          key={index}
-          text={overlay.text}
-          top={overlay.top}
-          left={overlay.left}
-          size={overlay.size}
-        />
-      ))}
+      {overlays.map((overlay, index) =>
+        overlay.image==="true" ? (
+          <ImageOverlay
+            key={index}
+            text={overlay.text}
+            top={overlay.top}
+            left={overlay.left}
+            size={overlay.size}
+            imageUrl={overlay.imageUrl}
+          />
+        ) : (
+          <Overlay
+            key={index}
+            text={overlay.text}
+            top={overlay.top}
+            left={overlay.left}
+            size={overlay.size}
+          />
+        )
+      )}
       <div className="create-button-container">
         <AddFormDialog add={addOverlay} />
         <DeleteFormDialog del={deleteOverlay} />

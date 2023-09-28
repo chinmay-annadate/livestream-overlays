@@ -15,6 +15,7 @@ export default function UpdateFormDialog({ update }) {
   const [top, setTop] = useState("");
   const [left, setLeft] = useState("");
   const [size, setSize] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +27,7 @@ export default function UpdateFormDialog({ update }) {
 
   const handleCloseAndUpdate = () => {
     setOpen(false);
-    update(text, newText, top, left, size);
+    update(text, newText, top, left, size, imageUrl);
   };
 
   return (
@@ -51,7 +52,6 @@ export default function UpdateFormDialog({ update }) {
             onChange={(e) => setText(e.target.value)}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="New text"
@@ -86,6 +86,15 @@ export default function UpdateFormDialog({ update }) {
             fullWidth
             variant="standard"
             onChange={(e) => setSize(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="name"
+            label="Image url"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setImageUrl(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import ToggleButton from "@mui/material/ToggleButton";
 
 export default function AddFormDialog({ add }) {
   const [open, setOpen] = React.useState(false);
@@ -14,6 +15,8 @@ export default function AddFormDialog({ add }) {
   const [top, setTop] = useState("");
   const [left, setLeft] = useState("");
   const [size, setSize] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,7 +28,7 @@ export default function AddFormDialog({ add }) {
 
   const handleCloseAndAdd = () => {
     setOpen(false);
-    add(text, top, left, size);
+    add(text, top, left, size, image, imageUrl);
   };
 
   return (
@@ -76,6 +79,26 @@ export default function AddFormDialog({ add }) {
             variant="standard"
             onChange={(e) => setSize(e.target.value)}
           />
+          <ToggleButton
+            value="check"
+            selected={image}
+            onChange={() => {
+              setImage(!image);
+            }}
+          >
+            Image
+          </ToggleButton>
+          {image ? (
+            <TextField
+              margin="dense"
+              id="name"
+              label="Image url"
+              type="text"
+              fullWidth
+              variant="standard"
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
+          ) : null}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
